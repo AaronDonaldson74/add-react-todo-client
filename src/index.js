@@ -43,6 +43,22 @@ class App extends React.Component {
     })
   }
 
+  deleteTodo = (id) => {
+    fetch(`http://localhost:5000/todo/${id}`, {
+        method: "DELETE"
+    })
+    .then(()=>{
+        this.setState({
+          todos: this.state.todos.filter(todo => {
+            return todo.id !== id 
+          })
+        })
+    })
+    .catch(err => {
+        console.log('DeleteError', err)
+    })
+  }
+
   componentDidMount() {
     fetch("http://localhost:5000/todos")
     .then(res => res.json())
@@ -55,7 +71,7 @@ class App extends React.Component {
 
   renderTodos = () => {
     return this.state.todos.map(todo =>{
-      return <TodoItem key={todo.id} todoData={todo} />
+      return <TodoItem key={todo.id} todoData={todo} deleteTodo={this.deleteTodo} />
     })
   }
 

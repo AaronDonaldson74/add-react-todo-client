@@ -20,12 +20,13 @@ class TodoItem extends React.Component {
             this.setState({
                 done: !this.state.done
             })
-
         })
         .catch(err => {
             console.log("toggleDone error", err)
         })
     }
+
+ 
 
     render() {
         return (
@@ -38,6 +39,7 @@ class TodoItem extends React.Component {
                 <p className={this.state.done ? "done" : null}>
                     {this.props.todoData.title}
                 </p>
+                <button onClick={() => this.props.deleteTodo(this.props.todoData.id)}>Delete Item</button>
             </div>
         )
     }
