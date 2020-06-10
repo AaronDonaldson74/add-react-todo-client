@@ -8,7 +8,8 @@ class App extends React.Component {
     super();
 
     this.state = {
-      todo: ""
+      todo: "",
+      todos: []
     }
   }
 
@@ -21,6 +22,16 @@ class App extends React.Component {
   addTodo = (event) => {
     event.preventDefault()
     console.log(this.state, "form submitted")
+  }
+
+  componentDidMount() {
+    fetch("http://localhost:5000/todos")
+    .then(res => res.json())
+    .then(data => {this.setState({todos: data})
+  })
+    .catch(err => {
+      console.log('Fetch Todos Error: ', err)
+    })
   }
 
   render() {
