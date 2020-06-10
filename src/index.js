@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import './style.css'
+
 class App extends React.Component {
   constructor() {
     super();
@@ -16,16 +18,23 @@ class App extends React.Component {
     })
   }
 
+  addTodo = (event) => {
+    event.preventDefault()
+    console.log(this.state, "form submitted")
+  }
+
   render() {
     return(
       <div className="app">
         <h1>ToDo List</h1>
-        <form>
+        <form className="add-todo" onSubmit={this.addTodo}>
           <input
-          type="text"
-          placeholder="Add ToDo"
-          onChange={this.handleChange}
-          value={this.state.todo}/>
+            type="text"
+            placeholder="Add ToDo Item"
+            onChange={this.handleChange}
+            value={this.state.todo}
+          />
+          <button type="submit">Add Item</button>
         </form>
       </div>
     )
