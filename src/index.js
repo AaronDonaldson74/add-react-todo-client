@@ -1,9 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { faTrash, faPlus } from "@fortawesome/free-solid-svg-icons";
 
 import './style.css';
 import TodoItem from './todo-item';
 import axios from 'axios';
+
+library.add(faTrash, faPlus);
 
 class App extends React.Component {
   constructor() {
@@ -25,7 +31,8 @@ class App extends React.Component {
     event.preventDefault()
     axios({
       method: "post",
-      url: "http://localhost:5000/todo",
+      // url: "http://localhost:5000/todo",
+      url: "https://add-flask-todo-api.herokuapp.com/todo",
       headers: { "content-type": "application/json" },
       data: {
         title: this.state.todo,
@@ -44,7 +51,8 @@ class App extends React.Component {
   }
 
   deleteTodo = (id) => {
-    fetch(`http://localhost:5000/todo/${id}`, {
+    // fetch(`http://localhost:5000/todo/${id}`, {
+    fetch(`https://add-flask-todo-api.herokuapp.com/todo/${id}`, {
         method: "DELETE"
     })
     .then(()=>{
@@ -60,7 +68,8 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    fetch("http://localhost:5000/todos")
+    // fetch("http://localhost:5000/todos")
+    fetch("https://add-flask-todo-api.herokuapp.com/todos")
     .then(res => res.json())
     .then(data => {this.setState({todos: data})
   })
@@ -86,7 +95,11 @@ class App extends React.Component {
             onChange={this.handleChange}
             value={this.state.todo}
           />
-          <button type="submit">Add Item</button>
+          {/* <button type="submit">Add Item</button> */}
+          <a className="action-icon" 
+                onClick={() => this.handleChange()}>
+                    <FontAwesomeIcon icon="plus"/>
+                </a>
         </form>
         {this.renderTodos()}
       </div>

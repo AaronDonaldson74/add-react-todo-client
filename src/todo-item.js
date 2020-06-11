@@ -1,4 +1,7 @@
 import React from 'react';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+
 
 class TodoItem extends React.Component {
     constructor(props) {
@@ -9,7 +12,8 @@ class TodoItem extends React.Component {
     }
 
     toggleDone = () => {
-        fetch(`http://localhost:5000/todo/${this.props.todoData.id}`, {
+        // fetch(`http://localhost:5000/todo/${this.props.todoData.id}`, {
+        fetch(`https://add-flask-todo-api.herokuapp.com/todo/${this.props.todoData.id}`, {
             method: "PATCH",
             headers: { "content-type": "application/json" },
             body: JSON.stringify({
@@ -39,7 +43,10 @@ class TodoItem extends React.Component {
                 <p className={this.state.done ? "done" : null}>
                     {this.props.todoData.title}
                 </p>
-                <button onClick={() => this.props.deleteTodo(this.props.todoData.id)}>Delete Item</button>
+                <a className="action-icon" 
+                onClick={() => this.props.deleteTodo(this.props.todoData.id)}>
+                    <FontAwesomeIcon icon="trash"/>
+                </a>
             </div>
         )
     }
